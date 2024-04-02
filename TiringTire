@@ -1,0 +1,187 @@
+from tkinter import *
+import tkinter as tk
+import cv2
+import pygame
+from PIL import Image, ImageTk
+import math
+class close_window:
+ def __init__(self, root):
+ self.root = root
+ self.root.title("WELCOME")
+ # Initialize video capture using OpenCV
+ self.cap = cv2.VideoCapture('demo.mp4')
+
+ # Create a Canvas to display the video
+frames
+ self.canvas = tk.Canvas(self.root,
+width=1000, height=1000)
+ self.canvas.pack()
+ # Start the video playback
+ self.update_video()
+
+ def update_video(self):
+ ret, frame = self.cap.read()
+ if ret:
+ frame = cv2.cvtColor(frame,
+cv2.COLOR_BGR2RGB)
+ img = Image.fromarray(frame)
+ self.photo =
+ImageTk.PhotoImage(image=img)
+ self.canvas.create_image(0, 0,
+anchor=tk.NW, image=self.photo)
+ self.root.after(5,
+self.update_video) # Update every 20
+milliseconds
+if __name__ == "__main__":
+ root = tk.Tk()
+ close_window = close_window(root)
+ root.mainloop()
+#WINDOW 3
+def window2():
+ def calculate():
+ # Get values from entry fields
+ tire_diameter =
+float(tire_diameter_entry.get())
+ speedometer_reading =
+float(speedometer_reading_entry.get())
+ diameter_error =
+float(diameter_error_entry.get())
+
+ #Calculate time
+ time=(1*3600)//speedometer_reading
+#DISTANCE=1MILE,1HR=3600SECONDS
+ #Calculate Total Number of Revolutions
+
+total_revolutions=(1*5280*12)/math.pi*tire_diam
+eter #TOTAL REVOLUTIONS=DISTANCE/SPEED
+ #Calculate Number of Revolutions per
+Second
+
+revolutions_per_sec=speedometer_reading*5280*12
+/(3600*math.pi*tire_diameter)
+#SPEED/CIRCUMFERENCE
+ # Calculate actual speed
+ actual_diameter = tire_diameter * (1 +
+diameter_error / 100)
+ actual_speed = (speedometer_reading
+*5280*12)/3600*math.pi*actual_diameter
+ # Update label with result
+ result_speed_label.config(text=f"Actual
+speed: {actual_speed:.1f} mph")
+ result_time_label.config(text=f"Time:
+{time:.1f} seconds")
+
+result_total_revolutions_label.config(text=f"To
+tal Number of Revolutions:
+{total_revolutions:.1f}")
+
+result_revolutions_per_second_label.config(text
+=f"Number of Revolutions per Second:
+{revolutions_per_sec:.1f} seconds")
+ #Configuring Root window
+ root = Tk()
+ fun.withdraw()
+ root.title("Speedometer Calculator")
+ lilac = "#C8A2C8"
+ root.config(bg = lilac)
+# Create GUI window
+ #Creating Labels
+ tire_diameter_label = Label(root,
+text="Tire diameter (inches):",fg="black",bg =
+lilac,font=('Arial',25))
+ tire_diameter_entry =
+Entry(root,fg="blue",bg =
+lilac,font=('Arial',25))
+ speedometer_reading_label = Label(root,
+text="Speedometer reading (mph):",fg="black",bg
+= lilac,font=('Arial',25))
+ speedometer_reading_entry =
+Entry(root,fg="blue",bg =
+lilac,font=('Arial',25))
+ diameter_error_label = Label(root,
+text="Diameter error (%):",fg="black",bg =
+lilac,font=('Arial',25))
+ diameter_error_entry =
+Entry(root,fg="blue",bg =
+lilac,font=('Arial',25))
+# Create calculate button
+ calculate_button = Button(root,
+text="Calculate",
+command=calculate,bg='lightblue',font=('Arial',
+25))
+# Create result label
+ result_speed_label = Label(root,
+text="Actual speed: ",fg="blue",bg =
+lilac,font=('Arial',25))
+ result_time_label = Label(root, text="Time:
+",fg="blue",bg = lilac,font=('Arial',25))
+ result_total_revolutions_label =
+Label(root, text="Total Number of Revolutions:
+",fg="blue",bg = lilac,font=('Arial',25))
+ result_revolutions_per_second_label =
+Label(root, text="Number of Revolutions Per
+Second: ",fg="blue",bg =
+lilac,font=('Arial',25))
+# Grid layout
+ tire_diameter_label.grid(row=3,
+column=0,padx=8,pady=10)
+ tire_diameter_entry.grid(row=3, column=1)
+ speedometer_reading_label.grid(row=4,
+column=0,padx=8,pady=10)
+ speedometer_reading_entry.grid(row=4,
+column=1)
+ diameter_error_label.grid(row=5,
+column=0,padx=8,pady=10)
+ diameter_error_entry.grid(row=5, column=1)
+ calculate_button.grid(row=6,
+column=0,columnspan=2,padx=8,pady=10)
+ result_speed_label.grid(row=7,
+column=0,columnspan=2,padx=8,pady=10)
+ result_time_label.grid(row=8,
+column=0,columnspan=2,padx=8,pady=10)
+ result_total_revolutions_label.grid(row=9,
+column=0,columnspan=2,padx=8,pady=10)
+
+result_revolutions_per_second_label.grid(row=10
+, column=0,columnspan=2,padx=8,pady=10)
+#WINDOW 2
+fun = tk.Tk()
+fun.title('TIRING TIRE')
+#Creating Animated background
+video_capture = cv2.VideoCapture("video.mp4")
+def update_frame():
+ ret, frame = video_capture.read()
+ if ret:
+ frame = cv2.cvtColor(frame,
+cv2.COLOR_BGR2RGB)
+ frame = cv2.resize(frame, (800, 700))
+# Resize to match window size
+ photo =
+ImageTk.PhotoImage(image=Image.fromarray(frame)
+)
+ label.config(image=photo)
+ label.image = photo
+ fun.after(10, update_frame) # Update
+frame every 10 milliseconds
+ else:
+
+video_capture.set(cv2.CAP_PROP_POS_FRAMES, 0)
+# Restart video
+ update_frame()
+label = tk.Label(fun)
+label.pack()
+update_frame()
+btn1 = Button(fun, text =
+'NEXT',bg='green',fg='black',height=3,
+width=13,command=window2)
+btn1.place(relx=0.9, rely=0.8, anchor=CENTER)
+pygame.mixer.init()
+def play():
+ pygame.mixer.music.load("sound.mp3")
+ pygame.mixer.music.play()
+b1=Button(fun,text='PLAYSONG',bg='pink',fg='blu
+e',font=('helvetica,50'),command=play)
+b1.place(relx=0.1, rely=0.8, anchor=CENTER)
+fun.geometry('800x700')
+fun.configure(bg='black')
+fun.mainloop()
